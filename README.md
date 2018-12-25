@@ -1,6 +1,59 @@
 # CarND-Path-Planning-Project
 Self-Driving Car Engineer Nanodegree Program
-   
+
+[//]: # (Image References)
+
+[image1]: ./images/car_1.PNG "Explore Training data"
+[image2]: ./images/changing_lanes_1.PNG "Explore Validation data"
+[image3]: ./images/car_2.PNG "Explore Training data"
+
+## Rubric Points
+
+### Valid Trajectories
+
+#### The car is able to drive at least 4.32 miles without incident
+
+The car drove for more than 4.32 miles while meeting all the requirements
+
+![alt text][image1]
+
+![alt text][image3]
+
+#### The car drives according to the speed limit.
+
+The car does not drive faster than the speed limit and also does not drive very slow
+
+#### Max Acceleration and Jerk are not Exceeded.
+
+The car obeys these rules and no related messages are observed.
+
+#### Car does not have collisions.
+
+No collisions occur
+
+#### The car stays in its lane, except for the time between changing lanes.
+
+The car switches lanes (if safe and possible) when there is a car ahead in the same lane
+
+#### The car is able to change lanes
+
+When a lane change is required, the adjacent lanes are checked to make sure that no collisions will occur. In the below image, the left lane has a blocking car and so our car changes to the right lane.
+
+![alt text][image2]
+
+
+#### Reflection
+
+All of the code changes required to drive the car are contained in the h.onMessage() function in main.cpp. 
+
+The process of generating the trajectory points for the car starts with analyzing the environment (also in Frenet coordinates). Mainly, the presence of traffic anywhere near our car is detected. A car that is closer than 30 metres qualifies as a potential problem and the code also detects whether it is in the same lane or in the adjacent lanes.
+
+If the code detects a car in the same lane ahead of our car, we need to slow down and think about changing lanes to proceed forward faster. The acceleration of the car is reduced by 0.224 to slow it down without jerks. Before changing lanes, we make sure that there are no blocking/dangerous cars in the target lane.
+
+To decide the trajectory of the car, the last two points of the previous trajectory and 3 far away points are used to initialize a spline computation. The points are transformed to local car co-ordinates to simplify the calculations involved. Remaining points from the previous trajectory are used along with spline computed points to genrate the final trajectory of the car (after transforming to the correct coordinate system). 
+
+## Original ReadMe
+
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2).
 
